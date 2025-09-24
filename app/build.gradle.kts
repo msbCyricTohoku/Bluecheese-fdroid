@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.bc"
+    namespace = "com.msb.bluecheese"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.bc"
+        applicationId = "com.msb.bluecheese"
         minSdk = 29
         targetSdk = 34
         versionCode = 1

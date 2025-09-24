@@ -1,4 +1,4 @@
-package com.example.bc
+package com.msb.bluecheese
 
 import android.content.ClipData
 import android.content.ClipDescription
