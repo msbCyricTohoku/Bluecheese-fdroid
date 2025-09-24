@@ -1,0 +1,4 @@
+Bluecheese lets you encrypt and decrypt text entirely offline.
+• Simple, clean UI
+• No ads, no tracking
+• 100% open source (GPL-3.0)
