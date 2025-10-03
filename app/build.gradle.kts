@@ -11,8 +11,8 @@ android {
         applicationId = "com.msb.bluecheese"
         minSdk = 29
         targetSdk = 34
-        versionCode = 2
-        versionName = "2.0.1"
+        versionCode = 3
+        versionName = "2.0.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
