@@ -1,0 +1,1 @@
+v3.0.0: Security upgrade to PBKDF2 + AES-GCM (AEAD) for stronger encryption and tamper protection. Uses per item salt/nonce and higher PBKDF2 rounds.

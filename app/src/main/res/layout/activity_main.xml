@@ -63,7 +63,8 @@
                 android:contentDescription="Paste"
                 app:icon="@drawable/ic_paste"
                 app:layout_constraintTop_toBottomOf="@id/text_input_layout"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:backgroundTint="#3c95b5"/>
 
             <!-- Passphrase field with password toggle -->
             <com.google.android.material.textfield.TextInputLayout
@@ -126,7 +127,8 @@
                     android:layout_gravity="end|top"
                     android:layout_margin="8dp"
                     android:contentDescription="Copy"
-                    app:icon="@drawable/ic_copy" />
+                    app:icon="@drawable/ic_copy"
+                    app:backgroundTint="#3c95b5"/>
             </FrameLayout>
 
             <!-- Primary actions: equal width via chain -->
@@ -140,7 +142,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/decrypt_button"
                 app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintHorizontal_chainStyle="spread" />
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:backgroundTint="#3c95b5" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/decrypt_button"
@@ -151,7 +154,8 @@
                 app:layout_constraintTop_toBottomOf="@id/output_container"
                 app:layout_constraintStart_toEndOf="@id/encrypt_button"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_weight="1" />
+                app:layout_constraintHorizontal_weight="1"
+                app:backgroundTint="#3c95b5"/>
 
             <!-- Bottom actions -->
             <com.google.android.material.button.MaterialButton

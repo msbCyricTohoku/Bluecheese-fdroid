@@ -17,11 +17,7 @@ A fast, privacy-friendly App for text encryption.
 
 ## Encryption Algorithm
 
-At the moment the program uses AES-128 in CBC mode with PKCS#5 padding.
-
-Please note that, the present version provides confidentiality but not authenticity.
-
-In future updates, I will surely expand to more robust and strong encryption algorithm.
+Current version uses PBKDF2 + AES-GCM (AEAD) for stronger encryption and tamper protection.
 
 ## Contribute
 
