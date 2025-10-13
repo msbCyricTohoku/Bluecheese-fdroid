@@ -21,6 +21,7 @@ import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
+import java.text.Normalizer //to ensure it works on all devices for cross device compatability
 
 //in this version I switched to PBKDF2 + AES-GCM (AEAD) for a better encryption
 
@@ -53,9 +54,12 @@ class MainActivity : AppCompatActivity() {
         passphraseInput = findViewById(R.id.passphrase_input)
         outputText = findViewById(R.id.output_text)
 
+
         val pasteButton: MaterialButton = findViewById(R.id.paste_button)
 
             val copyButton: MaterialButton = findViewById(R.id.copy_button)
+
+        findViewById<MaterialButton>(R.id.clear_button).setOnClickListener { textInput.setText("") }
 
         findViewById<View>(R.id.encrypt_button).setOnClickListener { onEncryptClicked() }
         findViewById<View>(R.id.decrypt_button).setOnClickListener {
@@ -79,17 +83,14 @@ class MainActivity : AppCompatActivity() {
     private fun onEncryptClicked() {
         try {
             val plaintext = textInput.text.toString()
-            val passphrase = passphraseInput.text.toString()
+            val passphrase = normalizePass(passphraseInput.text.toString())
 
             if (plaintext.isEmpty() || passphrase.isEmpty()) {
                 showErrorDialog("Input Error", "Text and passphrase fields cannot be empty.")
                 return
             }
-
-            //new AEAD path (no IV from passphrase)
             val encryptedText = encrypt(plaintext, passphrase)
             outputText.text = encryptedText
-
         } catch (e: Exception) {
             showErrorDialog("Encryption Error", "An error occurred during encryption: ${e.message}")
             e.printStackTrace()
@@ -99,16 +100,14 @@ class MainActivity : AppCompatActivity() {
     private fun onDecryptClicked() {
         try {
             val envelope = textInput.text.toString()
-            val passphrase = passphraseInput.text.toString()
+            val passphrase = normalizePass(passphraseInput.text.toString())
 
             if (envelope.isEmpty() || passphrase.isEmpty()) {
                 showErrorDialog("Input Error", "Ciphertext and passphrase fields cannot be empty.")
                 return
             }
-
             val decryptedText = decrypt(envelope, passphrase)
             outputText.text = decryptedText
-
         } catch (e: Exception) {
             showErrorDialog("Decryption Error", "An error occurred during decryption: ${e.message}")
             e.printStackTrace()
@@ -169,15 +168,16 @@ class MainActivity : AppCompatActivity() {
     private fun decrypt(cipherEnvelope: String, passphrase: String): String {
         require(passphrase.isNotEmpty()) { "Password is empty" }
 
-        val parts = cipherEnvelope.split(":")
+        val raw = cipherEnvelope.trim()                   //here we trim global whitespace
+        val parts = raw.split(":").map { it.trim() }      //trim each field -- imp
         require(parts.size == 7 && parts[0] == ENVELOPE_MAGIC && parts[1] == ENVELOPE_ALG && parts[2] == ENVELOPE_KDF) {
             "Invalid message format"
         }
 
         val iterations = parts[3].toInt()
-        val salt = b64d(parts[4])
+        val salt  = b64d(parts[4])                        //b64d strips whitespace + tolerant decode
         val nonce = b64d(parts[5])
-        val ct = b64d(parts[6])
+        val ct    = b64d(parts[6])
 
         val key = deriveKeyPBKDF2(passphrase, salt, iterations)
 
@@ -201,11 +201,21 @@ class MainActivity : AppCompatActivity() {
         return SecretKeySpec(keyBytes, "AES")
     }
 
+
+    private fun normalizePass(raw: String): String {
+
+        val nfkc = Normalizer.normalize(raw, Normalizer.Form.NFKC).trim()
+
+        return nfkc
+            .replace(Regex("[\\u200B-\\u200D\\uFEFF]"), "")
+            .replace("\u00A0", " ")
+    }
+
+
     private fun b64(bytes: ByteArray): String =
         Base64.encodeToString(bytes, Base64.NO_WRAP)
-
     private fun b64d(s: String): ByteArray =
-        Base64.decode(s, Base64.NO_WRAP)
+        Base64.decode(s.replace(Regex("\\s+"), ""), Base64.DEFAULT)
 
     //clipboard
     private fun showErrorDialog(title: String, message: String) {
