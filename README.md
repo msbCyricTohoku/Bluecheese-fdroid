@@ -19,6 +19,11 @@ A fast, privacy-friendly App for text encryption.
 
 Current version uses PBKDF2 + AES-GCM (AEAD) for stronger encryption and tamper protection.
 
+## Important bug report and fixes
+
+- Fixed a cross-device compatibility bug caused by whitespace when sharing encrypted text via WhatsApp (thanks to H. Watabe for the report).
+- Added a Clear Text button at H. Watabe’s request.
+
 ## Contribute
 
 Issues and pull requests are welcome. Please open an issue to discuss significant changes.
