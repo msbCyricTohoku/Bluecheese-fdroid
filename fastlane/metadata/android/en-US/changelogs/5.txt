@@ -1,0 +1,1 @@
+Fixed a cross-device compatibility bug when sharing encrypted text via WhatsApp (thanks to H. Watabe for the report).
