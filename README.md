@@ -2,6 +2,10 @@
 
 A fast, privacy-friendly App for text encryption.
 
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/com.msb.bluecheese/)
+
 ## Screenshots
 
 <p align="center">
