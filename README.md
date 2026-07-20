@@ -27,6 +27,10 @@ Current version uses PBKDF2 + AES-GCM (AEAD) for stronger encryption and tamper 
 
 - Fixed a cross-device compatibility bug caused by whitespace when sharing encrypted text via WhatsApp (thanks to H. Watabe for the report).
 - Added a Clear Text button at H. Watabe’s request.
+- Anti-Screenshot
+- Time-Bomb
+- Async Crypto 
+- System Integration
 
 ## Contribute
 
