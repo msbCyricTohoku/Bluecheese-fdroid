@@ -26,13 +26,12 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <!-- Secret text input (full width) -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_input_layout"
                 style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="secret text"
+                android:hint="secret text or cipher envelope"
                 app:boxBackgroundMode="filled"
                 app:boxCornerRadiusTopStart="12dp"
                 app:boxCornerRadiusTopEnd="12dp"
@@ -53,7 +52,6 @@
                     android:scrollbars="vertical" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Clear icon button (left) -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/clear_button"
                 style="@style/Widget.Material3.Button.Icon"
@@ -66,9 +64,8 @@
                 app:iconSize="18dp"
                 app:layout_constraintTop_toBottomOf="@id/text_input_layout"
                 app:layout_constraintEnd_toStartOf="@id/paste_button"
-                app:backgroundTint="#3c95b5"/>
+                app:backgroundTint="?attr/colorPrimary"/>
 
-            <!-- Paste icon button (right) -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/paste_button"
                 style="@style/Widget.Material3.Button.Icon"
@@ -81,9 +78,8 @@
                 app:iconSize="18dp"
                 app:layout_constraintTop_toBottomOf="@id/text_input_layout"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:backgroundTint="#3c95b5"/>
+                app:backgroundTint="?attr/colorPrimary"/>
 
-            <!-- Passphrase field with password toggle; IME/autofill hardened -->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/passphrase_layout"
                 style="@style/Widget.Material3.TextInputLayout.FilledBox.Dense"
@@ -109,13 +105,21 @@
                     android:privateImeOptions="disableDirectWriting=true;disableHandwriting=true;" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Output container: card + overlaid copy icon -->
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/expiry_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Self-destruct in 1 hour"
+                app:layout_constraintTop_toBottomOf="@id/passphrase_layout"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <FrameLayout
                 android:id="@+id/output_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/passphrase_layout"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/expiry_switch"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
@@ -137,24 +141,40 @@
                         android:maxLines="10"
                         android:gravity="top"
                         android:padding="16dp"
+                        android:paddingTop="52dp"
                         android:text="Ciphertext/Decrypted text will appear here"
                         android:textIsSelectable="true"
                         android:textSize="16sp" />
                 </com.google.android.material.card.MaterialCardView>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/copy_button"
-                    style="@style/Widget.Material3.Button.Icon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_gravity="end|top"
-                    android:layout_margin="8dp"
-                    android:contentDescription="Copy"
-                    app:icon="@drawable/ic_copy"
-                    app:backgroundTint="#3c95b5"/>
+                    android:layout_margin="8dp">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/share_button"
+                        style="@style/Widget.Material3.Button.Icon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="8dp"
+                        android:contentDescription="Share"
+                        app:icon="@android:drawable/ic_menu_share"
+                        app:backgroundTint="?attr/colorPrimary"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/copy_button"
+                        style="@style/Widget.Material3.Button.Icon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:contentDescription="Copy"
+                        app:icon="@drawable/ic_copy"
+                        app:backgroundTint="?attr/colorPrimary"/>
+                </LinearLayout>
             </FrameLayout>
 
-            <!-- Primary actions: equal width via chain -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/encrypt_button"
                 android:layout_width="0dp"
@@ -166,23 +186,24 @@
                 app:layout_constraintEnd_toStartOf="@id/decrypt_button"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintHorizontal_chainStyle="spread"
-                app:backgroundTint="#3c95b5" />
+                app:backgroundTint="?attr/colorPrimary" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/decrypt_button"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginStart="8dp"
                 android:text="Decipher"
                 app:layout_constraintTop_toBottomOf="@id/output_container"
                 app:layout_constraintStart_toEndOf="@id/encrypt_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_weight="1"
-                app:backgroundTint="#3c95b5"/>
+                app:backgroundTint="?attr/colorPrimary"/>
 
-            <!-- Bottom actions -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/about_button"
+                style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -195,10 +216,12 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/quit_button"
+                style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="Quit"
+                android:layout_marginStart="8dp"
                 app:layout_constraintTop_toBottomOf="@id/decrypt_button"
                 app:layout_constraintStart_toEndOf="@id/about_button"
                 app:layout_constraintEnd_toEndOf="parent"
